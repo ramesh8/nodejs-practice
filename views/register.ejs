@@ -1,0 +1,38 @@
+<%- include("partials/header")%>
+<div class="container mt-5">
+  <% if(typeof message != 'undefined') {%>
+  <div class="alert alert-primary" role="alert"><%=message%></div>
+  <%}%>
+  <form method="post" action="/register">
+    <div class="mb-3">
+      <label for="uname" class="form-label">User Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="uname"
+        name="uname"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="passwd" class="form-label">Password</label>
+      <input type="password" class="form-control" id="passwd" name="passwd" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="mt-3">
+      Registered Already?, then login <a href="/login">here</a>.
+    </div>
+  </form>
+</div>
+<%- include("partials/footer")%>

@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <h1>Products</h1>
+  <h2>Welcome <%=user.name%></h2>
+  <% products.forEach(product=>{ %>
+  <div class="product card mt-2" style="width: 18rem">
+    <img
+      class="card-img-top"
+      src="images/<%= product.image%>"
+      alt="Card image cap"
+    />
+    <div class="card-body">
+      <h5 class="card-title"><%= product.name %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= product.price%></h6>
+      <p class="card-text">
+        <%= product.description%> Some quick example text to build on the card
+        title and make up the bulk of the card's content.
+      </p>
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div>
+  </div>
+  <% }); %>
+</div>
+
+<%- include('partials/footer') %>
