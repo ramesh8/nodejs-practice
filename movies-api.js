@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.get("/api/movies", async (req, res) => {
   //get movies from mongodb and return movies
-  let movies = await db.collection("movies").findOne();
+  let movies = await db.collection("movies").find().limit(10);
   console.log(movies);
   res.json(movies);
 });
