@@ -94,7 +94,7 @@ app.post("/register", (req, res) => {
     email: email,
   };
 
-  users.push(user);
+  // users.push(user);
   db.collection("users").insertOne(user);
 
   // res.send("<h1>User Created Successfully</h1>");
@@ -110,32 +110,25 @@ app.get("/login", (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, passwd } = req.body;
-  // console.log(email, passwd);
-  let users = await db.collection("users").find();
-  users = await users.toArray();
-  console.log(users);
-  let foundUser = users.find((u) => u.email == email);
-  if (!foundUser) {
-    // res.send("<h1>Invalid User Credentials</h1>");
-    req.session.message = "Invalid User Credentials";
-    req.session.user = foundUser;
-    res.redirect("/login");
-    return;
-  }
 
+  let users = await (
+    await db.collection("users").find({ email: email })
+  ).toArray();
+
+  let foundUser = users[0];
+
+  console.log(email, passwd, foundUser);
   let passwordMatch = bcrypt.compareSync(passwd, foundUser.password);
-  if (!passwordMatch) {
-    // res.send("<h1>Invalid User Credentials</h1>");
+
+  if (passwordMatch) {
+    req.session.user = foundUser;
+    res.redirect("/");
+    return;
+  } else {
     req.session.message = "Invalid User Credentials";
-    res.redirect("/login");
+    req.redirect("/login");
     return;
   }
-
-  req.session.user = foundUser;
-  console.log(req.session);
-  // res.send("<h1>Welcome to our web site</h1>");
-  req.session.message = "Welcome to my web site";
-  res.redirect("/");
 });
 
 app.get("/logout", (req, res) => {
